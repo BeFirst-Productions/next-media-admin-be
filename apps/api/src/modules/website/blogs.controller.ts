@@ -29,7 +29,7 @@ export const getLatestBlogs = asyncHandler(async (req: Request, res: Response) =
 });
 
 export const getBlogBySlug = asyncHandler(async (req: Request, res: Response) => {
-  const { slug } = req.params;
+  const slug = req.params.slug as string;
   const blog = await blogService.getBlogBySlug(slug);
   sendSuccess(res, blog, 'Blog details fetched successfully');
 });
