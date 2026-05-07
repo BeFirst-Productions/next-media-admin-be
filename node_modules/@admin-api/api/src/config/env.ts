@@ -1,8 +1,20 @@
 import { z } from 'zod';
 import dotenv from 'dotenv';
 import path from 'path';
+import fs from 'fs';
 
-dotenv.config({ path: path.resolve(__dirname, '../../.env') });
+const envPaths = [
+  path.resolve(process.cwd(), '.env'),
+  path.resolve(__dirname, '../../.env'),
+  path.resolve(__dirname, '../../../../../.env')
+];
+
+const validEnvPath = envPaths.find(p => fs.existsSync(p));
+if (validEnvPath) {
+  dotenv.config({ path: validEnvPath });
+} else {
+  dotenv.config();
+}
 
 const EnvSchema = z.object({
   NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),

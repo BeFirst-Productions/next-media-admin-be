@@ -10,7 +10,7 @@ interface TokenPayload extends AuthenticatedUser {
 
 export function signAccessToken(user: AuthenticatedUser): string {
   return jwt.sign(
-    { _id: user._id, email: user.email, role: user.role, type: 'access' } satisfies TokenPayload,
+    { _id: user._id, name: user.name, email: user.email, role: user.role, type: 'access' } satisfies TokenPayload,
     env.JWT_SECRET,
     { expiresIn: env.JWT_EXPIRES_IN, algorithm: 'HS256' } as jwt.SignOptions,
   );
@@ -18,7 +18,7 @@ export function signAccessToken(user: AuthenticatedUser): string {
 
 export function signRefreshToken(user: AuthenticatedUser): string {
   return jwt.sign(
-    { _id: user._id, email: user.email, role: user.role, type: 'refresh' } satisfies TokenPayload,
+    { _id: user._id, name: user.name, email: user.email, role: user.role, type: 'refresh' } satisfies TokenPayload,
     env.JWT_REFRESH_SECRET,
     { expiresIn: env.JWT_REFRESH_EXPIRES_IN, algorithm: 'HS256' } as jwt.SignOptions,
   );
